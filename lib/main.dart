@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(home: CounterScreen()));
+  runApp(MaterialApp(home: HomeScreen(), debugShowCheckedModeBanner: false));
 }
 
 class HomeScreen extends StatelessWidget {
@@ -43,8 +43,16 @@ class HomeScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amberAccent,
                 ),
+
                 onPressed: () {
-                  print("Thichyo");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return CounterScreen();
+                      },
+                    ),
+                  );
                 },
                 child: Text("Go to next screen"),
               ),
@@ -62,7 +70,7 @@ class CounterScreen extends StatefulWidget {
 }
 
 class _CounterScreenState extends State<CounterScreen> {
-  var data = 0;
+  double data = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +89,24 @@ class _CounterScreenState extends State<CounterScreen> {
               },
               child: Text("+"),
             ),
-            Text(data.toString()),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    mul();
+                  },
+                  child: Text("*"),
+                ),
+                Text(data.toString()),
+                ElevatedButton(
+                  onPressed: () {
+                    div();
+                  },
+                  child: Text("/"),
+                ),
+              ],
+            ),
             ElevatedButton(
               onPressed: () {
                 dec();
@@ -104,6 +129,18 @@ class _CounterScreenState extends State<CounterScreen> {
   void dec() {
     setState(() {
       data = data - 1;
+    });
+  }
+
+  void mul() {
+    setState(() {
+      data = data * 2;
+    });
+  }
+
+  void div() {
+    setState(() {
+      data = data / 2;
     });
   }
 }
